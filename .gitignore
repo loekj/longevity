@@ -151,3 +151,4 @@ vite.config.ts.timestamp-*
 # Private health documents. Never publish.
 SIPPERPLAN.pdf
 LONGEVITY.md
+TODO.md
