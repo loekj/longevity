@@ -147,3 +147,7 @@ vite.config.ts.timestamp-*
 
 # Turbo Repo
 .turbo
+
+# Private health documents. Never publish.
+SIPPERPLAN.pdf
+LONGEVITY.md
