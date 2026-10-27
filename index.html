@@ -565,6 +565,7 @@ const FREQ = {
   ev6: { label: 'Every 6 weeks', ev: 6 },
   ev8: { label: 'Every 8 weeks', ev: 8 },
   ev12: { label: 'Every 12 weeks', ev: 12 },
+  ev26: { label: 'Every 6 months', ev: 26 },
   total: { label: 'Set number of sessions', total: true },
   once: { label: 'Once', once: true },
   cont: { label: 'Ongoing', cont: true },
@@ -996,17 +997,22 @@ const T = [
   // Regenerative & peptides
   { id: 'exosomes-iv', name: 'IV exosomes', cat: 'regen', setting: 'clinic', freq: 'once', weeks: 1, stage: 'both',
     tags: ['Regeneration', 'Inflammation', 'Cell signalling'],
-    sum: 'From the best frontier labs, for example through Cellular Performance Institute (CPI).',
-    body: `Extracellular vesicles from stem cells carry signals (microRNA, proteins) that can lower inflammation and support repair. Quality depends heavily on the lab. Cellular Performance Institute (CPI) is the hub that many clinics work through.`,
+    sum: 'Signals from stem cells. Gentler than stem cells, but the benefit is still unproven.',
+    body: `Extracellular vesicles from stem cells. They are mainly messengers: they carry signals (microRNA, proteins) that can lower inflammation and support repair. They are gentler on the body than stem cells, but the benefit is still unproven and supplier quality varies a lot. Cellular Performance Institute (CPI) is the hub that many clinics work through.`,
     protocol: `Once a year, or a short series.`,
-    cautions: `Sourcing and quality control vary. Legal status differs per country.`,
+    cautions: `Benefit still unproven. Sourcing and quality control vary. Legal status differs per country.`,
     people: ['cpi'], contra: ['cancer'] },
-  { id: 'stem-cells', name: 'Stem cells + exosomes', cat: 'regen', setting: 'clinic', freq: 'once', weeks: 1, stage: 'both',
-    tags: ['Regeneration', 'Immune', 'Repair'],
-    sum: 'Specially made stem cells with exosomes, for example through CPI.',
-    body: `Mesenchymal stem cells (often from umbilical cord) given by IV, sometimes with exosomes. The main effect is thought to come from signalling and immune modulation, not from new tissue.`,
-    protocol: `Once. Repeat as the clinic advises.`,
-    cautions: `Sourcing and quality vary. A cancer history needs review.`,
+  { id: 'stem-cells', name: 'Stem cells + exosomes', cat: 'regen', setting: 'clinic', freq: 'ev26', weeks: 52, stage: 'both',
+    tags: ['Regeneration', 'Immune', 'Repair', 'Umbilical cord', 'Bone marrow'],
+    sum: 'Umbilical cord cells or your own bone marrow cells, through CPI. Repeat every 6 months.',
+    body: [
+      `Mesenchymal stem cells given by IV, sometimes with exosomes. The main effect is thought to come from signalling and immune modulation, not from new tissue. Exosomes alone are gentler on the body, but their benefit is still unproven.`,
+      `Best source: Cellular Performance Institute (CPI). CPI has used one umbilical cord cell line (cells from a single donor) for over 7 years, because it performed best. Mike Tyson was treated there in 2024, before his fight with Jake Paul. Joe Rogan often recommends CPI on his podcast, and many athletes and well-known people go there.`,
+      `Two sources of cells. Umbilical cord cells suit older people, whose own stem cells are often weaker. Younger people can use their own cells: taken from the bone marrow in a small surgery, multiplied in the lab and injected fresh on the day they are ready. Own cells are a full match to the body, which can make them work better.`,
+      `Frontier: cells made for one job, for example stem cells that turn into astrocytes (support cells in the brain).`,
+    ].join('\n\n'),
+    protocol: `Every 6 months, with nothing in between, as CPI advises.`,
+    cautions: `Not approved in the US or the EU for longevity or repair. Sourcing and quality vary. A cancer history needs review. Taking your own cells needs a small bone marrow surgery.`,
     people: ['cpi'], contra: ['cancer'] },
   { id: 'ghk', name: 'GHK-Cu', cat: 'regen', setting: 'home', freq: 'daily', weeks: 8, stage: 'both',
     tags: ['Skin', 'Collagen', 'Tissue repair', 'Gene expression'],
@@ -1749,7 +1755,7 @@ function aboutHTML(e, opts = {}) {
   if (rules.length) kv.push(['Sequencing', [...new Set(rules.map(r => r.text))].map(esc).join('<br>')]);
   if (e.contra && e.contra.length) kv.push(['Safety flags', `<span class="chips">${e.contra.map(c => `<span class="tag">${esc(FLAG[c] ? FLAG[c].short : c)}</span>`).join('')}</span>`]);
   if (!opts.noConsider && e.consider && e.consider.length) kv.push(['If a finding', `<span class="chips">${e.consider.map(E).filter(Boolean).map(t => `<button class="tag" data-act="lib-goto" data-id="${t.id}">${esc(t.name)}</button>`).join('')}</span>`]);
-  const prose = `${e.body ? `<p>${esc(e.body)}</p>` : ''}`
+  const prose = `${e.body ? e.body.split(/\n\s*\n/).map(t => `<p>${esc(t.trim())}</p>`).join('') : ''}`
     + `${e.recipe ? `<h4>Recipe, full-strength daily amounts</h4><dl class="kv recipe">${e.recipe.map(([a, b]) => `<dt>${esc(b)}</dt><dd>${esc(a)}</dd>`).join('')}</dl>` : ''}`
     + `${e.protocol ? `<h4>Default protocol</h4><p>${esc(e.protocol)}</p>` : ''}`
     + `${e.cautions ? `<h4>Cautions</h4><p>${esc(e.cautions)}</p>` : ''}`;
