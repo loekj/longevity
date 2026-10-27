@@ -609,6 +609,10 @@ const PEOPLE = [
   { id: 'hertoghe', net: true, name: 'Dr. Thierry Hertoghe', focus: 'Hormone and anti-ageing medicine, BHRT. Heads the International Hormone Society.', place: 'Brussels', cats: ['hormones'] },
   { id: 'friedman', net: true, name: 'Dr. Theodore Friedman', focus: 'Endocrinology: adrenal, pituitary, thyroid, fatigue', place: 'Los Angeles, CA', cats: ['hormones'] },
   { id: 'chandler', net: true, name: 'Dr. Scott Chandler, DMD', focus: 'Biological dentistry', place: 'Summit View Biological Dentistry, Park City, UT', cats: ['pathogens'] },
+  { id: 'grieder', net: true, name: 'Dr. Mischa Grieder, ND', focus: 'Holistic Lyme doctor, also with a spiritual focus', place: 'San Francisco Preventive Medical Group, San Francisco, CA', web: 'https://sfpmg.com/', cats: ['pathogens'] },
+  { id: 'harris', net: true, name: 'Dr. Steven Harris, MD', focus: 'Lyme doctor with a heavy focus on triple-antibiotic therapy. Works with Gordon Medical.', place: 'Gordon Medical Associates, CA', web: 'https://gordonmedical.com/steven-harris-md/', cats: ['pathogens'] },
+  { id: 'moorcroft', net: true, name: 'Dr. Tom Moorcroft, DO', focus: 'Lyme doctor. Uses triple-antibiotic therapy next to natural treatments.', place: 'Origins of Health', web: 'https://www.originsofhealth.com/', cats: ['pathogens'] },
+  { id: 'mavberg', net: true, name: 'Dr. med. Philip Mavberg', focus: 'INUSpheresis specialist: combines treatments with INUSpheresis and its specific filters, and tests the eluate. Microplastics and mycotoxins are coming soon to the test kits.', place: 'AYUS INUSpheresis Center, Basel, Switzerland', web: 'https://en.ayus.group/', cats: ['toxins'] },
   { id: 'yu', net: false, name: 'Dr. Simon Yu', focus: 'Parasite protocol for the first kill phase', place: 'St. Louis, MO', cats: ['pathogens'] },
   { id: 'davis', net: false, name: 'Dr. William Davis', focus: 'L. reuteri yogurt (Super Gut)', place: '', cats: ['microbiome'] },
   { id: 'shade', net: false, name: 'Dr. Christopher Shade', focus: 'Quicksilver Scientific: minerals and binders', place: '', cats: ['nutrition', 'toxins'] },
@@ -618,6 +622,7 @@ const PEOPLE = [
   { id: 'straube', net: false, name: 'Dr. Richard Straube', focus: 'INUSpheresis', place: 'INUS Medical Center, Cham, Germany', cats: ['toxins'] },
   { id: 'leitzke', net: false, name: 'Dr. Marco Leitzke', focus: 'Low-dose nicotine patch protocol for long COVID and spike', place: '', cats: ['pathogens'] },
   { id: 'cpi', net: false, name: 'Cellular Performance Institute (CPI)', focus: 'Hub for stem cells and exosomes that many clinics work through', place: 'Tijuana, Mexico', cats: ['regen'] },
+  { id: 'frontier', net: false, name: 'Frontier Biologics', focus: "Exosome lab: amniotic fluid and Wharton's jelly exosomes, amniotic membrane", place: 'Waco, TX', web: 'https://frontierbiologics.com/', cats: ['regen'], notes: 'Orders: orders@frontierbiologics.com, (254) 262-8070.' },
   { id: 'fahy', net: false, name: 'Greg Fahy', focus: 'TRIIM thymus regeneration', place: 'Intervene Immune', cats: ['experimental'] },
   { id: 'trevor', net: false, name: 'Fasting with Trevor', focus: 'Long dry fasts, documented on Instagram', place: '', cats: ['cellular'] },
   { id: 'wolfe', net: false, name: 'Yannick Wolfe', focus: 'Dry Fasting Club and the Scorch Protocol', place: '', cats: ['cellular'] },
@@ -697,12 +702,15 @@ const T = [
     cautions: `Needs good venous access. Citrate can lower calcium. Exchange also removes medicines and supplements, so dose them after a session. IVIG can cause headache and, rarely, clots.`,
     people: ['johnson'], flags: ['toxins'] },
   { id: 'inus', name: 'INUSpheresis', cat: 'toxins', setting: 'clinic', freq: 'total', n: 3, weeks: 52, stage: 'maintain',
-    tags: ['Microplastics', 'Environmental toxins', 'Inflammation', 'Maintenance detox'],
+    tags: ['Microplastics', 'Mycotoxins', 'Environmental toxins', 'Inflammation', 'Maintenance detox'],
     sum: 'Filter apheresis for ongoing management, about 3 times a year, with an eluate test.',
-    body: `Double-filtration plasmapheresis developed by Dr. Richard Straube at the INUS Medical Center (Cham, Germany). It removes environmental toxins, inflammatory mediators and particles while the plasma goes back to the patient. Afterwards the used filter is rinsed and the eluate (the "eluate bag") is analysed. This shows what was removed, for example microplastic-like particles and metals.`,
+    body: [
+      `Double-filtration plasmapheresis developed by Dr. Richard Straube at the INUS Medical Center (Cham, Germany). It removes environmental toxins, inflammatory mediators and particles while the plasma goes back to the patient. Afterwards the used filter is rinsed and the eluate (the "eluate bag") is analysed. This shows what was removed, for example microplastic-like particles and metals.`,
+      `Specialist: Dr. med. Philip Mavberg at AYUS in Basel. He combines other treatments with INUSpheresis and its specific filters, and tests the eluate. Microplastics and mycotoxins are coming soon to their eluate test kits.`,
+    ].join('\n\n'),
     protocol: `About 3 rounds a year. A round is usually 2 sessions, 48 to 72 hours apart. Eluate bag test included.`,
     cautions: `As with any apheresis: venous access and anticoagulation during the session. Time medicines after the session.`,
-    people: ['straube', 'johnson'], flags: ['toxins', 'spike'] },
+    people: ['mavberg', 'straube', 'johnson'], flags: ['toxins', 'spike'] },
   { id: 'chelation', name: 'Heavy-metal chelation', cat: 'toxins', setting: 'clinic', freq: 'pw1', weeks: 12, stage: 'push',
     tags: ['Heavy metals', 'Mercury', 'Lead'],
     sum: 'DMSA, DMPS or EDTA rounds, based on the provocation results.',
@@ -996,12 +1004,23 @@ const T = [
 
   // Regenerative & peptides
   { id: 'exosomes-iv', name: 'IV exosomes', cat: 'regen', setting: 'clinic', freq: 'once', weeks: 1, stage: 'both',
-    tags: ['Regeneration', 'Inflammation', 'Cell signalling'],
-    sum: 'Signals from stem cells. Gentler than stem cells, but the benefit is still unproven.',
-    body: `Extracellular vesicles from stem cells. They are mainly messengers: they carry signals (microRNA, proteins) that can lower inflammation and support repair. They are gentler on the body than stem cells, but the benefit is still unproven and supplier quality varies a lot. Cellular Performance Institute (CPI) is the hub that many clinics work through.`,
+    tags: ['Regeneration', 'Inflammation', 'Cell signalling', 'Amniotic fluid', "Wharton's jelly"],
+    sum: 'Preferred source: Frontier Biologics. Gentler than stem cells, but the benefit is still unproven.',
+    body: [
+      `Extracellular vesicles from stem cells. They are mainly messengers: they carry signals (microRNA, proteins) that can lower inflammation and support repair. They are gentler on the body than stem cells, but the benefit is still unproven and supplier quality varies a lot. Cellular Performance Institute (CPI) is the hub that many clinics work through.`,
+      `Preferred source: Frontier Biologics in Waco, Texas. Dave Asprey uses their exosomes, according to the company. Each product combines exosomes from amniotic fluid and from Wharton's jelly (umbilical cord). The tissue is processed right away, never frozen, with no synthetic additives. Vendor data: over 250 proteins and up to 3,693 µg/mL protein, with particle counts (NTA) and protein panels from outside labs. Every lot is tested for sterility (USP <71>) and endotoxin (USP <85>).`,
+      `Donors are enrolled by month 3 of pregnancy and tested for infections throughout. C-section births only, and no COVID-19 vaccinated donors.`,
+      `Vendor case reports, all from one doctor and without a control group: venous leg ulcers healed in 3 weeks; in a 6-patient neuropathy series, 5 of 5 measured patients improved; one heart failure patient went from an ejection fraction of 18 % to 35 to 40 % after 2 injections at the heart.`,
+      `Frontier also makes MSC exosomes (600 to 720 billion particles) for injection, and an amniotic membrane for wounds and surgery. Only clinics can order: a new account needs the doctor's license and NPI number. Order Monday to Wednesday; payment by 2 pm Central ships the same day. Keep the vials in a validated freezer.`,
+    ].join('\n\n'),
+    lists: [
+      { title: 'Frontier Biologics prices, clinic line', rows: [['1 cc, 350 to 450 billion exosomes', '$750'], ['2 cc, 700 to 900 billion', '$1,350'], ['5 cc, 1.75 to 2.25 trillion', '$2,000'], ['10 cc, 3.5 to 4.5 trillion', '$3,800']] },
+      { title: 'Aesthetics line', rows: [['1 cc, 150 billion exosomes', '$350'], ['2 cc, 300 billion', '$600'], ['5 cc, 750 billion', '$1,000']] },
+      { title: 'Overnight shipping', rows: [['Delivery by 10:30', '$160'], ['Delivery by 8:30', '$225']] },
+    ],
     protocol: `Once a year, or a short series.`,
-    cautions: `Benefit still unproven. Sourcing and quality control vary. Legal status differs per country.`,
-    people: ['cpi'], contra: ['cancer'] },
+    cautions: `Benefit still unproven. No exosome product is FDA approved. In November 2024 the FDA sent Frontier Biologics a warning letter: it called the amniotic fluid and membrane products unapproved and unlicensed, and found that manufacturing did not meet sterile-production rules. Frontier called these mostly mild documentation issues, and says its fluid product (XYLANT) now runs under an active FDA IND (#32482). An IND allows clinical trials; it is not approval. Legal status differs per country.`,
+    people: ['frontier', 'cpi'], contra: ['cancer'] },
   { id: 'stem-cells', name: 'Stem cells + exosomes', cat: 'regen', setting: 'clinic', freq: 'ev26', weeks: 52, stage: 'both',
     tags: ['Regeneration', 'Immune', 'Repair', 'Umbilical cord', 'Bone marrow'],
     sum: 'Umbilical cord cells or your own bone marrow cells, through CPI. Repeat every 6 months.',
@@ -1551,7 +1570,7 @@ function makePlan({ person = 'Me', start = nextMonday(), year = 1, template = 'f
   return p;
 }
 function seed() {
-  S = { v: 3, current: null, plans: [], people: PEOPLE.map(x => ({ notes: '', ...clone(x) })), edits: {}, custom: [] };
+  S = { v: 5, current: null, plans: [], people: PEOPLE.map(x => ({ notes: '', ...clone(x) })), edits: {}, custom: [] };
   rebuildLib();
   const p = makePlan();
   S.plans.push(p); S.current = p.id;
@@ -1587,6 +1606,16 @@ function normalize(st) {
       if (!p.dx['dx-oxid']) p.dx['dx-oxid'] = { on: true, status: 'todo', date: '', notes: '' };
     }
     st.v = 3;
+  }
+  if ((+st.v || 1) < 4) {
+    if (!st.people.some(x => x.id === 'frontier')) st.people.push({ notes: '', ...clone(PEOPLE.find(x => x.id === 'frontier')) });
+    st.v = 4;
+  }
+  if ((+st.v || 1) < 5) {
+    for (const id of ['grieder', 'harris', 'moorcroft', 'mavberg']) if (!st.people.some(x => x.id === id)) st.people.push({ notes: '', ...clone(PEOPLE.find(x => x.id === id)) });
+    const fb = st.people.find(x => x.id === 'frontier');
+    if (fb && !fb.web) { fb.web = PEOPLE.find(x => x.id === 'frontier').web; fb.notes = (fb.notes || '').replace(/ Website: frontierbiologics\.com$/, ''); }
+    st.v = 5;
   }
   if (!st.plans.some(p => p.id === st.current)) st.current = st.plans[0].id;
   return st;
@@ -1757,6 +1786,7 @@ function aboutHTML(e, opts = {}) {
   if (!opts.noConsider && e.consider && e.consider.length) kv.push(['If a finding', `<span class="chips">${e.consider.map(E).filter(Boolean).map(t => `<button class="tag" data-act="lib-goto" data-id="${t.id}">${esc(t.name)}</button>`).join('')}</span>`]);
   const prose = `${e.body ? e.body.split(/\n\s*\n/).map(t => `<p>${esc(t.trim())}</p>`).join('') : ''}`
     + `${e.recipe ? `<h4>Recipe, full-strength daily amounts</h4><dl class="kv recipe">${e.recipe.map(([a, b]) => `<dt>${esc(b)}</dt><dd>${esc(a)}</dd>`).join('')}</dl>` : ''}`
+    + `${(e.lists || []).map(l => `<h4>${esc(l.title)}</h4><dl class="kv recipe">${l.rows.map(([a, b]) => `<dt>${esc(b)}</dt><dd>${esc(a)}</dd>`).join('')}</dl>`).join('')}`
     + `${e.protocol ? `<h4>Default protocol</h4><p>${esc(e.protocol)}</p>` : ''}`
     + `${e.cautions ? `<h4>Cautions</h4><p>${esc(e.cautions)}</p>` : ''}`;
   return { prose, kv: kv.length ? `<dl class="kv">${kv.map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`).join('')}</dl>` : '' };
@@ -1770,7 +1800,7 @@ function suggestHTML(s) {
   return `${s.dx.length ? `<h3 class="sub">Tests</h3><div class="sugs">${s.dx.map(x => row(x, 'dx')).join('')}</div>` : ''}${s.tx.length ? `<h3 class="sub">Modules</h3><div class="sugs">${s.tx.map(x => row(x, 'tx')).join('')}</div>` : ''}`;
 }
 function hay(e) {
-  return [e.name, e.sum, e.body, e.protocol, e.cautions, e.how, e.where, e.when, (e.tags || []).join(' '), catOf(e).name, (e.recipe || []).map(r => r[0]).join(' '), (e.people || []).map(id => (person(id) || {}).name || '').join(' ')].join(' ').toLowerCase();
+  return [e.name, e.sum, e.body, e.protocol, e.cautions, e.how, e.where, e.when, (e.tags || []).join(' '), catOf(e).name, (e.recipe || []).map(r => r[0]).join(' '), (e.lists || []).map(l => l.title).join(' '), (e.people || []).map(id => (person(id) || {}).name || '').join(' ')].join(' ').toLowerCase();
 }
 function nameHit(e, q) {
   if (!q) return 0;
@@ -2378,15 +2408,17 @@ function personRow(x) {
     ${open ? personBody(x, linked) : ''}
   </div>`;
 }
+const webUrl = v => { let u = String(v || '').trim(); if (!u) return ''; if (!/^https?:\/\//i.test(u)) u = 'https://' + u; return /^https?:\/\/[^\s"'<>]+$/i.test(u) ? u : ''; };
 function personBody(x, linked) {
   const fld = (f, label) => `<label class="field span2"><span>${label}</span><input class="input" data-in="p-f" data-f="${f}" data-id="${x.id}" data-k="p-${f}-${x.id}" value="${esc(x[f] || '')}" autocomplete="off"></label>`;
   return `<div class="r-body">
     <div class="fgrid">
-      ${fld('name', 'Name')}${fld('focus', 'Focus')}${fld('place', 'Place or clinic')}
+      ${fld('name', 'Name')}${fld('focus', 'Focus')}${fld('place', 'Place or clinic')}${fld('web', 'Website')}
       <label class="field span2"><span>Notes, talks and follow-ups</span><textarea class="input" rows="5" data-in="p-f" data-f="notes" data-id="${x.id}" data-k="p-notes-${x.id}" placeholder="Last talk, open questions, next step">${esc(x.notes || '')}</textarea></label>
     </div>
     <div class="stack-col">
       <div class="mini"><h4>Areas</h4><div class="chips catbar sel areas">${CATS.map(c => `<button class="chip L-${c.L}${(x.cats || []).includes(c.id) ? ' on' : ''}" data-act="p-cat" data-id="${x.id}" data-cat="${c.id}" data-k="pc-${x.id}-${c.id}" aria-pressed="${(x.cats || []).includes(c.id)}">${esc(c.name)}</button>`).join('')}</div></div>
+      ${webUrl(x.web) ? `<a class="lnk" href="${esc(webUrl(x.web))}" target="_blank" rel="noopener noreferrer">Open website</a>` : ''}
       <label class="flag"><input type="checkbox" class="cb" data-ch="p-net" data-id="${x.id}" data-k="p-net-${x.id}"${x.net ? ' checked' : ''}><span>In network</span></label>
       <div class="mini"><h4>Linked in the library</h4>${linked.length ? `<div class="chips areas">${linked.map(e => `<button class="tag" data-act="lib-goto" data-id="${e.id}">${esc(e.name)}</button>`).join('')}</div>` : '<p class="muted">No entries yet. Link a person when you edit an entry.</p>'}</div>
       <div class="row-actions"><button class="btn sm ghost danger" data-act="p-delete" data-id="${x.id}">Remove person</button></div>
@@ -2400,6 +2432,7 @@ function personModal() {
       <label class="field span2"><span>Name</span><input class="input" name="name" required data-autofocus autocomplete="off"></label>
       <label class="field span2"><span>Focus</span><input class="input" name="focus" autocomplete="off"></label>
       <label class="field span2"><span>Place or clinic</span><input class="input" name="place" autocomplete="off"></label>
+      <label class="field span2"><span>Website</span><input class="input" name="web" type="url" placeholder="https://" autocomplete="off"></label>
       <label class="flag span2"><input type="checkbox" class="cb" name="net" checked><span>In network</span></label>
     </div></div>
     <footer class="m-foot"><button type="button" class="btn ghost" data-act="close-layer">Cancel</button><button type="submit" class="btn primary">Add person</button></footer>
@@ -2764,7 +2797,7 @@ function saveMarker(f) {
 function savePerson(f) {
   const fd = new FormData(f), name = String(fd.get('name') || '').trim(); if (!name) return;
   const id = 'p-' + uid();
-  S.people.push({ id, name, focus: String(fd.get('focus') || '').trim(), place: String(fd.get('place') || '').trim(), notes: '', cats: [], net: fd.get('net') === 'on' });
+  S.people.push({ id, name, focus: String(fd.get('focus') || '').trim(), place: String(fd.get('place') || '').trim(), web: String(fd.get('web') || '').trim(), notes: '', cats: [], net: fd.get('net') === 'on' });
   U.pOpen = id; U.scrollTo = 'p-' + id;
   save(); closeLayer(); render(); toast('Person added');
 }

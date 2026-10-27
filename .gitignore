@@ -152,3 +152,7 @@ vite.config.ts.timestamp-*
 SIPPERPLAN.pdf
 LONGEVITY.md
 TODO.md
+
+# Vendor documents and macOS files. Keep local.
+Data/
+.DS_Store
