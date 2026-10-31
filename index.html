@@ -617,7 +617,9 @@ const PEOPLE = [
   { id: 'ostrow', net: true, name: 'Dr. Gary Ostrow, MD, DO', focus: 'Osteopathy and neural therapy', place: 'New York, NY', web: 'https://idny.org/physicians/gary-ostrow/', cats: ['regen'] },
   { id: 'egerter', net: true, name: 'Dr. Alexander Egerter, DO', focus: 'Osteopath, best in the field. PRP, prolotherapy and neural therapy (also stellate ganglion block), with cranial osteopathy.', place: 'Prolotherapy SF, San Francisco, CA', web: 'https://www.prolotherapysf.com/', cats: ['regen'] },
   { id: 'marinescu', net: true, name: 'Dr. Tudor Marinescu, MD, PhD', focus: 'Osteopathic manual medicine (cranial and biodynamic), neural therapy and prolotherapy', place: 'Sedona, AZ', web: 'https://www.doctortudor.com/', cats: ['regen'] },
-  { id: 'linn', net: true, name: 'Seth Linn', focus: 'Specialized osteopath: traditional European manual osteopathy, a gentle approach. Not a physician, so no injections.', place: 'Mill Valley and Sacramento, CA', web: 'https://sethlinn.com/', cats: ['regen'] },
+  { id: 'linn', net: true, name: 'Seth Linn', focus: 'Best bodywork. Specialized osteopath: traditional European manual osteopathy, a gentle approach. Not a physician, so no injections.', place: 'Mill Valley and Sacramento, CA', web: 'https://sethlinn.com/', cats: ['regen'] },
+  { id: 'fox', net: true, name: 'Dr. Terri Rebibo Fox, MD', focus: 'Mold treatment specialist: mold toxicity and CIRS, also Lyme', place: 'Boulder Holistic, Boulder, CO', web: 'https://boulderholistic.com/meet-our-team/dr-terri-rebibo-fox/', cats: ['toxins', 'pathogens'] },
+  { id: 'dennis', net: true, name: 'Dr. Donald Dennis, MD', focus: 'ENT surgeon for mycotoxins and chronic fungal sinusitis (fungus balls). Does the best surgeries to clean out fungal debris. Uses agar-plate testing to see mold reactivity.', place: 'Atlanta, GA', web: 'https://www.drdennisatlantaent.com/', cats: ['pathogens', 'toxins'], notes: 'His 2003 paper aims for 0 to 4 mold colonies on a 1-hour agar plate in the home air. His website was last updated in 2020: confirm that he still sees patients. Phone: (404) 355-1312.' },
   { id: 'yu', net: false, name: 'Dr. Simon Yu', focus: 'Parasite protocol for the first kill phase', place: 'St. Louis, MO', cats: ['pathogens'] },
   { id: 'davis', net: false, name: 'Dr. William Davis', focus: 'L. reuteri yogurt (Super Gut)', place: '', cats: ['microbiome'] },
   { id: 'shade', net: false, name: 'Dr. Christopher Shade', focus: 'Quicksilver Scientific: minerals and binders', place: '', cats: ['nutrition', 'toxins'] },
@@ -683,7 +685,7 @@ const T = [
     sum: 'Saline and xylitol rinse, with silver or an antifungal added by tendency.',
     body: `Most infections enter through the sinuses and airways, which connect closely to the brain. A daily rinse with saline and xylitol supports a healthy sinus microbiome. Add colloidal silver for a bacterial tendency, or an antifungal for a fungal tendency, based on SinusKey and MARCoNS results.`,
     protocol: `Daily, ongoing.`,
-    flags: ['sinus', 'mold'] },
+    people: ['dennis'], flags: ['sinus', 'mold'] },
   { id: 'marcons-tx', name: 'MARCoNS treatment', cat: 'pathogens', setting: 'home', freq: 'daily', weeks: 4, stage: 'push',
     tags: ['Sinus', 'MARCoNS', 'Biofilm', 'Mold / CIRS'],
     sum: 'Prescription nasal spray to clear MARCoNS, then a new swab.',
@@ -729,7 +731,7 @@ const T = [
     body: `Options include cholestyramine or Welchol (prescription, for mold toxins), activated charcoal, bentonite clay, chlorella and blended binders such as CellCore or Quicksilver Ultra Binder. Useful during kill phases and chelation, to soften die-off.`,
     protocol: `Daily, away from food and other supplements, for about 8 weeks.`,
     cautions: `Can cause constipation. Take 2 hours apart from medicines and supplements.`,
-    people: ['gordon', 'shade'], flags: ['mold', 'toxins'] },
+    people: ['gordon', 'fox', 'shade'], flags: ['mold', 'toxins'] },
   { id: 'gsh-neb', name: 'Nebulized glutathione', cat: 'toxins', setting: 'home', freq: 'daily', weeks: 8, stage: 'both',
     tags: ['Glutathione', 'Airways', 'Sinus', 'Antioxidant'],
     sum: 'Reduced glutathione, or MitoZen GlutaStat, by nebulizer for a few minutes a day.',
@@ -1304,7 +1306,7 @@ const D = [
     sum: 'Mycotoxins, environmental chemicals and metals from one urine sample.',
     body: `Mosaic Diagnostics EnviroTOX Burden combines TOXDetect (environmental chemicals such as glyphosate, phthalates and solvents), MycoTOX (mycotoxins) and toxic metals. Vibrant Wellness sells a similar Total Tox Burden panel. Shows which detox route matters most.`,
     how: 'Urine sample at home.', when: 'Baseline, then yearly.',
-    markers: ['myco'], consider: ['binders', 'inus', 'tpe-ivig', 'remediation'], people: ['gordon'], flags: ['mold', 'toxins'] },
+    markers: ['myco'], consider: ['binders', 'inus', 'tpe-ivig', 'remediation'], people: ['gordon', 'fox'], flags: ['mold', 'toxins'] },
   { id: 'dx-ermi', name: 'Home mold test (ERMI and HERTSMI-2)', cat: 'toxins', core: true,
     tags: ['Mold / CIRS', 'Environment'],
     sum: 'Dust test of the home, for example from Envirobiomics (Texas).',
@@ -1316,7 +1318,7 @@ const D = [
     sum: 'TGF-beta-1, C4a, MMP-9, MSH and VIP.',
     body: `Shoemaker biomarkers for chronic inflammatory response syndrome after mold exposure.`,
     how: 'Blood draw (special handling).', when: 'Baseline when mold is suspected.',
-    markers: ['tgfb', 'msh'], consider: ['binders', 'marcons-tx', 'remediation'], people: ['gordon'], flags: ['mold'] },
+    markers: ['tgfb', 'msh'], consider: ['binders', 'marcons-tx', 'remediation'], people: ['gordon', 'fox'], flags: ['mold'] },
   { id: 'dx-microplastics', name: 'Microplastics in blood', cat: 'toxins', optional: true,
     tags: ['Microplastics'],
     sum: 'Microplastic particles in blood or plasma.',
@@ -1594,7 +1596,7 @@ function makePlan({ person = 'Me', start = nextMonday(), year = 1, template = 'f
   return p;
 }
 function seed() {
-  S = { v: 7, current: null, plans: [], people: PEOPLE.map(x => ({ notes: '', ...clone(x) })), edits: {}, custom: [] };
+  S = { v: 8, current: null, plans: [], people: PEOPLE.map(x => ({ notes: '', ...clone(x) })), edits: {}, custom: [] };
   rebuildLib();
   const p = makePlan();
   S.plans.push(p); S.current = p.id;
@@ -1649,6 +1651,12 @@ function normalize(st) {
   if ((+st.v || 1) < 7) {
     if (!st.people.some(x => x.id === 'linn')) st.people.push({ notes: '', ...clone(PEOPLE.find(x => x.id === 'linn')) });
     st.v = 7;
+  }
+  if ((+st.v || 1) < 8) {
+    for (const id of ['fox', 'dennis']) if (!st.people.some(x => x.id === id)) st.people.push({ notes: '', ...clone(PEOPLE.find(x => x.id === id)) });
+    const ln = st.people.find(x => x.id === 'linn');
+    if (ln && /^Specialized osteopath: /.test(ln.focus || '')) ln.focus = PEOPLE.find(x => x.id === 'linn').focus;
+    st.v = 8;
   }
   if (!st.plans.some(p => p.id === st.current)) st.current = st.plans[0].id;
   return st;
