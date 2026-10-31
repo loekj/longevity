@@ -613,6 +613,10 @@ const PEOPLE = [
   { id: 'harris', net: true, name: 'Dr. Steven Harris, MD', focus: 'Lyme doctor with a heavy focus on triple-antibiotic therapy. Works with Gordon Medical.', place: 'Gordon Medical Associates, CA', web: 'https://gordonmedical.com/steven-harris-md/', cats: ['pathogens'] },
   { id: 'moorcroft', net: true, name: 'Dr. Tom Moorcroft, DO', focus: 'Lyme doctor. Uses triple-antibiotic therapy next to natural treatments.', place: 'Origins of Health', web: 'https://www.originsofhealth.com/', cats: ['pathogens'] },
   { id: 'mavberg', net: true, name: 'Dr. med. Philip Mavberg', focus: 'INUSpheresis specialist: combines treatments with INUSpheresis and its specific filters, and tests the eluate. Microplastics and mycotoxins are coming soon to the test kits.', place: 'AYUS INUSpheresis Center, Basel, Switzerland', web: 'https://en.ayus.group/', cats: ['toxins'] },
+  { id: 'knight', net: true, name: 'Dr. Andrew Knight, MD', focus: 'Cancer advising, best in the field. Reviews the diagnosis, treatment options and trials, and guides the care team. Does not treat: you keep your own doctors.', place: 'Knight Cancer Advising, Boulder, CO', web: 'https://www.canceradvising.com/', cats: [], notes: 'About $30,000 a month, for 3 months. The first 2 hours are free, to check the match and fit.' },
+  { id: 'ostrow', net: true, name: 'Dr. Gary Ostrow, MD, DO', focus: 'Osteopathy and neural therapy', place: 'New York, NY', web: 'https://idny.org/physicians/gary-ostrow/', cats: ['regen'] },
+  { id: 'egerter', net: true, name: 'Dr. Alexander Egerter, DO', focus: 'Osteopath, best in the field. PRP, prolotherapy and neural therapy (also stellate ganglion block), with cranial osteopathy.', place: 'Prolotherapy SF, San Francisco, CA', web: 'https://www.prolotherapysf.com/', cats: ['regen'] },
+  { id: 'marinescu', net: true, name: 'Dr. Tudor Marinescu, MD, PhD', focus: 'Osteopathic manual medicine (cranial and biodynamic), neural therapy and prolotherapy', place: 'Sedona, AZ', web: 'https://www.doctortudor.com/', cats: ['regen'] },
   { id: 'yu', net: false, name: 'Dr. Simon Yu', focus: 'Parasite protocol for the first kill phase', place: 'St. Louis, MO', cats: ['pathogens'] },
   { id: 'davis', net: false, name: 'Dr. William Davis', focus: 'L. reuteri yogurt (Super Gut)', place: '', cats: ['microbiome'] },
   { id: 'shade', net: false, name: 'Dr. Christopher Shade', focus: 'Quicksilver Scientific: minerals and binders', place: '', cats: ['nutrition', 'toxins'] },
@@ -1065,6 +1069,17 @@ const T = [
     protocol: `About 3 times a week in summer, building up the number of stings.`,
     cautions: `Risk of anaphylaxis. Test sting first, keep an epinephrine pen at hand, never do it alone.`,
     flags: ['lyme'], contra: ['bee', 'pregnancy'] },
+  { id: 'osteo-neural', name: 'Osteopathy + neural therapy', cat: 'regen', setting: 'clinic', freq: 'ev2', weeks: 12, stage: 'both',
+    tags: ['Scar tissue', 'Trauma', 'Fascia', 'Tissue fluids', 'Nervous system', 'Immune'],
+    sum: 'Hands-on osteopathy and procaine injections that bring stuck tissue, scars and old trauma back to life.',
+    body: [
+      `Osteopathy is hands-on work on the tissues: fascia, joints, organs and the skull (cranial osteopathy). Neural therapy injects a local anaesthetic, mostly procaine, into scars, tense tissue, trigger points and nerve ganglia (clusters of nerve cells), for example the stellate ganglion in the neck. The two are often combined, sometimes in the same session.`,
+      `The idea: healthy tissue is vibrant and pulses with energy, and this motion pumps fluids through it. Tissue that loses this motion stops pumping fluids and ages fast. Scars, old trauma and chronically tense tissue are typical stuck areas. Osteopathy and neural therapy revive this tissue and release the trauma held in it. Through the nervous system, this also acts on the brain and spinal cord (CNS) and on the immune system.`,
+      `Dr. Egerter can add PRP and prolotherapy (injections that start tissue repair) in the same sessions.`,
+    ].join('\n\n'),
+    protocol: `Start with the osteopathic assessment. Then sessions about every 2 weeks for 3 months, spaced out as the tissue responds.`,
+    cautions: `For now, only use the osteopaths in the network. Injection risks are rare: bleeding with blood thinners, allergy to the anaesthetic, and a collapsed lung (pneumothorax) from injections near the chest. Proof comes mostly from clinical practice; there are few controlled trials.`,
+    people: ['egerter', 'ostrow', 'marinescu'], contra: ['lung'] },
 
   // Experimental
   { id: 'triim', name: 'TRIIM protocol (thymus)', cat: 'experimental', setting: 'home', freq: 'daily', weeks: 52, stage: 'both',
@@ -1316,6 +1331,14 @@ const D = [
     how: 'EEG cap, about an hour.', when: 'Baseline, then every 1 to 2 years.',
     markers: ['qeeg'], consider: ['neurofeedback', 'pbm-helmet', 'lipus', 'nasal-ivig'], people: ['tichauer'], flags: ['neuro'] },
 
+  // Regenerative
+  { id: 'dx-osteo', name: 'Osteopathic assessment', cat: 'regen', core: true,
+    tags: ['Tissue motion', 'Scar tissue', 'Trauma', 'Fascia'],
+    sum: 'Hands-on check of tissue motion, scars and old trauma. Only by an osteopath in the network.',
+    body: `The osteopath feels where tissue has lost its motion and stopped pumping fluids: scars, old injuries, chronically tense areas, the spine and the skull. The result sets the plan for osteopathy and neural therapy. For now, only use the osteopaths in the network, until the network grows.`,
+    how: 'Hands-on exam in the clinic.', where: 'Egerter (San Francisco), Ostrow (New York) or Marinescu (Sedona, AZ).', when: 'Baseline, then yearly.',
+    consider: ['osteo-neural'], people: ['egerter', 'ostrow', 'marinescu'] },
+
   // Genetics
   { id: 'dx-wgs', name: 'Whole-genome sequencing', cat: 'genetics', optional: true,
     tags: ['Genome', 'Drug metabolism', 'Risk genes'],
@@ -1498,7 +1521,7 @@ const CAT_ORDER = CATS.map(c => c.id);
 const FLAG = Object.fromEntries(FLAGS.map(f => [f.id, f]));
 const MK = Object.fromEntries(M.map(m => [m.id, m]));
 const STATUS_TXT = { ok: 'On target', up: 'Improving', off: 'Off target' };
-const DX_ORDER = ['metabolic', 'hormones', 'pathogens', 'microbiome', 'toxins', 'brain', 'genetics', 'experimental'];
+const DX_ORDER = ['metabolic', 'hormones', 'pathogens', 'microbiome', 'toxins', 'brain', 'regen', 'genetics', 'experimental'];
 
 /* helpers */
 const $ = (s, r = document) => r.querySelector(s);
@@ -1570,7 +1593,7 @@ function makePlan({ person = 'Me', start = nextMonday(), year = 1, template = 'f
   return p;
 }
 function seed() {
-  S = { v: 5, current: null, plans: [], people: PEOPLE.map(x => ({ notes: '', ...clone(x) })), edits: {}, custom: [] };
+  S = { v: 6, current: null, plans: [], people: PEOPLE.map(x => ({ notes: '', ...clone(x) })), edits: {}, custom: [] };
   rebuildLib();
   const p = makePlan();
   S.plans.push(p); S.current = p.id;
@@ -1616,6 +1639,11 @@ function normalize(st) {
     const fb = st.people.find(x => x.id === 'frontier');
     if (fb && !fb.web) { fb.web = PEOPLE.find(x => x.id === 'frontier').web; fb.notes = (fb.notes || '').replace(/ Website: frontierbiologics\.com$/, ''); }
     st.v = 5;
+  }
+  if ((+st.v || 1) < 6) {
+    for (const id of ['knight', 'ostrow', 'egerter', 'marinescu']) if (!st.people.some(x => x.id === id)) st.people.push({ notes: '', ...clone(PEOPLE.find(x => x.id === id)) });
+    for (const p of st.plans) if (!p.dx['dx-osteo']) p.dx['dx-osteo'] = { on: true, status: 'todo', date: '', notes: '' };
+    st.v = 6;
   }
   if (!st.plans.some(p => p.id === st.current)) st.current = st.plans[0].id;
   return st;
