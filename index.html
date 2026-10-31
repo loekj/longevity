@@ -1268,6 +1268,12 @@ const D = [
     body: `SinusKey (MicroGenDX) maps the bacteria and fungi in the sinuses with DNA sequencing and qPCR, including total loads and antibiotic-resistance genes. A deep nasal swab checks for MARCoNS (multiple-antibiotic-resistant coagulase-negative staph) and latent staph. The results decide the rinse additives and whether MARCoNS treatment is needed.`,
     how: 'Nasal swabs.', when: 'Baseline, then after treatment.',
     markers: ['pathload', 'marcons'], consider: ['sinus-rinse', 'marcons-tx', 'ozone-ear', 'gsh-neb'], flags: ['sinus', 'mold'] },
+  { id: 'dx-ent', name: 'ENT checkup (trusted ENT)', cat: 'pathogens', core: true,
+    tags: ['Sinus', 'Fungal', 'Mycotoxins', 'Airways'],
+    sum: 'Sinus check by a trusted ENT for chronic fungal sinusitis and fungal debris. Dr. Donald Dennis.',
+    body: `A check of the nose and sinuses by an ENT (ear, nose and throat doctor) who knows mold illness. Chronic fungal sinusitis and fungus balls can keep releasing mycotoxins inside the body, even after the home is clean. Dr. Dennis also uses agar-plate testing to see mold reactivity. For now, only use a trusted ENT from the network. Do it together with the SinusKey test.`,
+    how: 'Clinic exam, usually with a nasal endoscope (a thin camera).', where: 'Dr. Donald Dennis, Atlanta, GA.', when: 'Baseline, then as the ENT advises.',
+    consider: ['sinus-rinse', 'marcons-tx'], people: ['dennis'], flags: ['sinus', 'mold'] },
 
   // Microbiome
   { id: 'dx-stool', name: 'Stool microbiome (Tiny Health and BiomeFx)', cat: 'microbiome', core: true,
@@ -1596,7 +1602,7 @@ function makePlan({ person = 'Me', start = nextMonday(), year = 1, template = 'f
   return p;
 }
 function seed() {
-  S = { v: 8, current: null, plans: [], people: PEOPLE.map(x => ({ notes: '', ...clone(x) })), edits: {}, custom: [] };
+  S = { v: 9, current: null, plans: [], people: PEOPLE.map(x => ({ notes: '', ...clone(x) })), edits: {}, custom: [] };
   rebuildLib();
   const p = makePlan();
   S.plans.push(p); S.current = p.id;
@@ -1657,6 +1663,10 @@ function normalize(st) {
     const ln = st.people.find(x => x.id === 'linn');
     if (ln && /^Specialized osteopath: /.test(ln.focus || '')) ln.focus = PEOPLE.find(x => x.id === 'linn').focus;
     st.v = 8;
+  }
+  if ((+st.v || 1) < 9) {
+    for (const p of st.plans) if (!p.dx['dx-ent']) p.dx['dx-ent'] = { on: true, status: 'todo', date: '', notes: '' };
+    st.v = 9;
   }
   if (!st.plans.some(p => p.id === st.current)) st.current = st.plans[0].id;
   return st;
