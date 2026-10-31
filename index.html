@@ -617,6 +617,7 @@ const PEOPLE = [
   { id: 'ostrow', net: true, name: 'Dr. Gary Ostrow, MD, DO', focus: 'Osteopathy and neural therapy', place: 'New York, NY', web: 'https://idny.org/physicians/gary-ostrow/', cats: ['regen'] },
   { id: 'egerter', net: true, name: 'Dr. Alexander Egerter, DO', focus: 'Osteopath, best in the field. PRP, prolotherapy and neural therapy (also stellate ganglion block), with cranial osteopathy.', place: 'Prolotherapy SF, San Francisco, CA', web: 'https://www.prolotherapysf.com/', cats: ['regen'] },
   { id: 'marinescu', net: true, name: 'Dr. Tudor Marinescu, MD, PhD', focus: 'Osteopathic manual medicine (cranial and biodynamic), neural therapy and prolotherapy', place: 'Sedona, AZ', web: 'https://www.doctortudor.com/', cats: ['regen'] },
+  { id: 'linn', net: true, name: 'Seth Linn', focus: 'Specialized osteopath: traditional European manual osteopathy, a gentle approach. Not a physician, so no injections.', place: 'Mill Valley and Sacramento, CA', web: 'https://sethlinn.com/', cats: ['regen'] },
   { id: 'yu', net: false, name: 'Dr. Simon Yu', focus: 'Parasite protocol for the first kill phase', place: 'St. Louis, MO', cats: ['pathogens'] },
   { id: 'davis', net: false, name: 'Dr. William Davis', focus: 'L. reuteri yogurt (Super Gut)', place: '', cats: ['microbiome'] },
   { id: 'shade', net: false, name: 'Dr. Christopher Shade', focus: 'Quicksilver Scientific: minerals and binders', place: '', cats: ['nutrition', 'toxins'] },
@@ -1075,11 +1076,11 @@ const T = [
     body: [
       `Osteopathy is hands-on work on the tissues: fascia, joints, organs and the skull (cranial osteopathy). Neural therapy injects a local anaesthetic, mostly procaine, into scars, tense tissue, trigger points and nerve ganglia (clusters of nerve cells), for example the stellate ganglion in the neck. The two are often combined, sometimes in the same session.`,
       `The idea: healthy tissue is vibrant and pulses with energy, and this motion pumps fluids through it. Tissue that loses this motion stops pumping fluids and ages fast. Scars, old trauma and chronically tense tissue are typical stuck areas. Osteopathy and neural therapy revive this tissue and release the trauma held in it. Through the nervous system, this also acts on the brain and spinal cord (CNS) and on the immune system.`,
-      `Dr. Egerter can add PRP and prolotherapy (injections that start tissue repair) in the same sessions.`,
+      `Dr. Egerter can add PRP and prolotherapy (injections that start tissue repair) in the same sessions. Seth Linn does the osteopathy only: he is not a physician, so no injections.`,
     ].join('\n\n'),
     protocol: `Start with the osteopathic assessment. Then sessions about every 2 weeks for 3 months, spaced out as the tissue responds.`,
     cautions: `For now, only use the osteopaths in the network. Injection risks are rare: bleeding with blood thinners, allergy to the anaesthetic, and a collapsed lung (pneumothorax) from injections near the chest. Proof comes mostly from clinical practice; there are few controlled trials.`,
-    people: ['egerter', 'ostrow', 'marinescu'], contra: ['lung'] },
+    people: ['egerter', 'linn', 'ostrow', 'marinescu'], contra: ['lung'] },
 
   // Experimental
   { id: 'triim', name: 'TRIIM protocol (thymus)', cat: 'experimental', setting: 'home', freq: 'daily', weeks: 52, stage: 'both',
@@ -1336,8 +1337,8 @@ const D = [
     tags: ['Tissue motion', 'Scar tissue', 'Trauma', 'Fascia'],
     sum: 'Hands-on check of tissue motion, scars and old trauma. Only by an osteopath in the network.',
     body: `The osteopath feels where tissue has lost its motion and stopped pumping fluids: scars, old injuries, chronically tense areas, the spine and the skull. The result sets the plan for osteopathy and neural therapy. For now, only use the osteopaths in the network, until the network grows.`,
-    how: 'Hands-on exam in the clinic.', where: 'Egerter (San Francisco), Ostrow (New York) or Marinescu (Sedona, AZ).', when: 'Baseline, then yearly.',
-    consider: ['osteo-neural'], people: ['egerter', 'ostrow', 'marinescu'] },
+    how: 'Hands-on exam in the clinic.', where: 'Egerter (San Francisco), Linn (Mill Valley or Sacramento), Ostrow (New York) or Marinescu (Sedona, AZ).', when: 'Baseline, then yearly.',
+    consider: ['osteo-neural'], people: ['egerter', 'linn', 'ostrow', 'marinescu'] },
 
   // Genetics
   { id: 'dx-wgs', name: 'Whole-genome sequencing', cat: 'genetics', optional: true,
@@ -1593,7 +1594,7 @@ function makePlan({ person = 'Me', start = nextMonday(), year = 1, template = 'f
   return p;
 }
 function seed() {
-  S = { v: 6, current: null, plans: [], people: PEOPLE.map(x => ({ notes: '', ...clone(x) })), edits: {}, custom: [] };
+  S = { v: 7, current: null, plans: [], people: PEOPLE.map(x => ({ notes: '', ...clone(x) })), edits: {}, custom: [] };
   rebuildLib();
   const p = makePlan();
   S.plans.push(p); S.current = p.id;
@@ -1644,6 +1645,10 @@ function normalize(st) {
     for (const id of ['knight', 'ostrow', 'egerter', 'marinescu']) if (!st.people.some(x => x.id === id)) st.people.push({ notes: '', ...clone(PEOPLE.find(x => x.id === id)) });
     for (const p of st.plans) if (!p.dx['dx-osteo']) p.dx['dx-osteo'] = { on: true, status: 'todo', date: '', notes: '' };
     st.v = 6;
+  }
+  if ((+st.v || 1) < 7) {
+    if (!st.people.some(x => x.id === 'linn')) st.people.push({ notes: '', ...clone(PEOPLE.find(x => x.id === 'linn')) });
+    st.v = 7;
   }
   if (!st.plans.some(p => p.id === st.current)) st.current = st.plans[0].id;
   return st;
