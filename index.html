@@ -1262,12 +1262,18 @@ const D = [
     body: `A lymphocyte transformation test that shows whether white blood cells react to specific metals. Useful before choosing dental materials or deciding on implant removal.`,
     how: 'Blood draw, shipped fresh.', when: 'Before dental work.',
     consider: ['dental-surgery'], people: ['chandler'], flags: ['implants', 'amalgam'] },
-  { id: 'dx-sinus', name: 'SinusKey and MARCoNS swab', cat: 'pathogens', core: true,
-    tags: ['Sinus', 'MARCoNS', 'Fungal', 'Staph'],
-    sum: 'Sinus microbiome, plus MARCoNS and latent staph.',
-    body: `SinusKey (MicroGenDX) maps the bacteria and fungi in the sinuses with DNA sequencing and qPCR, including total loads and antibiotic-resistance genes. A deep nasal swab checks for MARCoNS (multiple-antibiotic-resistant coagulase-negative staph) and latent staph. The results decide the rinse additives and whether MARCoNS treatment is needed.`,
-    how: 'Nasal swabs.', when: 'Baseline, then after treatment.',
-    markers: ['pathload', 'marcons'], consider: ['sinus-rinse', 'marcons-tx', 'ozone-ear', 'gsh-neb'], flags: ['sinus', 'mold'] },
+  { id: 'dx-sinus', name: 'SinusKey sinus microbiome', cat: 'pathogens', core: true,
+    tags: ['Sinus', 'Fungal', 'Bacteria', 'Resistance genes'],
+    sum: 'Bacteria and fungi in the sinuses, with total loads.',
+    body: `SinusKey (MicroGenDX) maps the bacteria and fungi in the sinuses with DNA sequencing and qPCR, including total loads and antibiotic-resistance genes. The result decides the rinse additives: silver for a bacterial tendency, an antifungal for a fungal tendency.`,
+    how: 'Nasal swab.', when: 'Baseline, then after treatment.',
+    markers: ['pathload'], consider: ['sinus-rinse', 'ozone-ear', 'gsh-neb'], flags: ['sinus', 'mold'] },
+  { id: 'dx-marcons', name: 'MARCoNS swab', cat: 'pathogens', core: true,
+    tags: ['Sinus', 'MARCoNS', 'Staph', 'Biofilm'],
+    sum: 'Deep nasal swab for MARCoNS and latent staph.',
+    body: `A deep nasal swab checks for MARCoNS (multiple-antibiotic-resistant coagulase-negative staph) and latent staph. These live in biofilm deep in the nose and are common in mold illness (CIRS). A positive swab means MARCoNS treatment, then a new swab.`,
+    how: 'Deep nasal swab.', when: 'Baseline, then after MARCoNS treatment.',
+    markers: ['marcons'], consider: ['marcons-tx', 'sinus-rinse'], flags: ['sinus', 'mold'] },
   { id: 'dx-ent', name: 'ENT checkup (trusted ENT)', cat: 'pathogens', core: true,
     tags: ['Sinus', 'Fungal', 'Mycotoxins', 'Airways'],
     sum: 'Sinus check by a trusted ENT for chronic fungal sinusitis and fungal debris. Dr. Donald Dennis.',
@@ -1602,7 +1608,7 @@ function makePlan({ person = 'Me', start = nextMonday(), year = 1, template = 'f
   return p;
 }
 function seed() {
-  S = { v: 9, current: null, plans: [], people: PEOPLE.map(x => ({ notes: '', ...clone(x) })), edits: {}, custom: [] };
+  S = { v: 10, current: null, plans: [], people: PEOPLE.map(x => ({ notes: '', ...clone(x) })), edits: {}, custom: [] };
   rebuildLib();
   const p = makePlan();
   S.plans.push(p); S.current = p.id;
@@ -1667,6 +1673,11 @@ function normalize(st) {
   if ((+st.v || 1) < 9) {
     for (const p of st.plans) if (!p.dx['dx-ent']) p.dx['dx-ent'] = { on: true, status: 'todo', date: '', notes: '' };
     st.v = 9;
+  }
+  if ((+st.v || 1) < 10) {
+    // SinusKey and the MARCoNS swab are now two tests. The swab starts with the old combined state.
+    for (const p of st.plans) if (!p.dx['dx-marcons']) p.dx['dx-marcons'] = p.dx['dx-sinus'] ? clone(p.dx['dx-sinus']) : { on: true, status: 'todo', date: '', notes: '' };
+    st.v = 10;
   }
   if (!st.plans.some(p => p.id === st.current)) st.current = st.plans[0].id;
   return st;
