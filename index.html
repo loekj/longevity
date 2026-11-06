@@ -620,6 +620,10 @@ const PEOPLE = [
   { id: 'linn', net: true, name: 'Seth Linn', focus: 'Best bodywork. Specialized osteopath: traditional European manual osteopathy, a gentle approach. Not a physician, so no injections.', place: 'Mill Valley and Sacramento, CA', web: 'https://sethlinn.com/', cats: ['regen'] },
   { id: 'fox', net: true, name: 'Dr. Terri Rebibo Fox, MD', focus: 'Mold treatment specialist: mold toxicity and CIRS, also Lyme', place: 'Boulder Holistic, Boulder, CO', web: 'https://boulderholistic.com/meet-our-team/dr-terri-rebibo-fox/', cats: ['toxins', 'pathogens'] },
   { id: 'dennis', net: true, name: 'Dr. Donald Dennis, MD', focus: 'ENT surgeon for mycotoxins and chronic fungal sinusitis (fungus balls). Does the best surgeries to clean out fungal debris. Uses agar-plate testing to see mold reactivity.', place: 'Atlanta, GA', web: 'https://www.drdennisatlantaent.com/', cats: ['pathogens', 'toxins'], notes: 'His 2003 paper aims for 0 to 4 mold colonies on a 1-hour agar plate in the home air. His website was last updated in 2020: confirm that he still sees patients. Phone: (404) 355-1312.' },
+  { id: 'savage', net: true, name: 'Dr. Paul Savage, MD', focus: 'Plasma exchange (TPE) and IVIG to remove toxins. Mold protocols and more.', place: 'MDLifespan, Chicago, IL', web: 'https://mdlifespan.com/', cats: ['toxins'], notes: 'A TPE series is usually 2 to 8 sessions. A full session uses about 9 to 12 bottles of albumin.' },
+  { id: 'pall', net: true, name: 'Dr. Martin Pall, PhD', focus: 'NO/ONOO- cycle theory of ME/CFS: nitric oxide (iNOS, eNOS) and peroxynitrite keep oxidative stress going in a loop. Breaks the loop with about 6 high-dose compounds, for example very high-dose vitamin C.', place: 'Washington State University (emeritus)', cats: ['cellular', 'nutrition'], notes: 'Researcher, not a treating doctor. His published protocol lists about 17 nutrients, with vitamin C at 500 to 1000 mg a day. His later claims about EMF and 5G are fringe.' },
+  { id: 'teitelbaum', net: true, name: 'Dr. Jacob Teitelbaum, MD', focus: 'SHINE protocol for ME/CFS and fibromyalgia: sleep, hormones, infections, nutrition and exercise as able', place: 'Kailua-Kona, HI', web: 'https://vitality101.com/', cats: ['cellular', 'hormones'], notes: 'Free SHINE training for practitioners: https://vitality101.com/online-training-for-shine' },
+  { id: 'hinkens', net: true, name: 'Kate Hinkens', focus: 'Bee venom theory, case studies and success stories. Says bee venom therapy cleared her own chronic Lyme.', place: 'Stinglab, Topanga, CA', web: 'https://www.stinglab.org/', cats: ['regen', 'pathogens'], notes: 'Beekeeper and teacher, not a physician. Offers a self-paced course, 1:1 consults and in-person treatments.' },
   { id: 'yu', net: false, name: 'Dr. Simon Yu', focus: 'Parasite protocol for the first kill phase', place: 'St. Louis, MO', cats: ['pathogens'] },
   { id: 'davis', net: false, name: 'Dr. William Davis', focus: 'L. reuteri yogurt (Super Gut)', place: '', cats: ['microbiome'] },
   { id: 'shade', net: false, name: 'Dr. Christopher Shade', focus: 'Quicksilver Scientific: minerals and binders', place: '', cats: ['nutrition', 'toxins'] },
@@ -705,9 +709,9 @@ const T = [
     tags: ['Fast detox', 'Inflammatory proteins', 'Autoantibodies', 'Microplastics'],
     sum: 'Plasma exchange for fast, heavy first-phase detox, then IVIG.',
     body: `Therapeutic plasma exchange separates the plasma and replaces it with albumin (sometimes with donor plasma). This removes circulating toxins, inflammatory proteins and autoantibodies in a short time. IVIG after the series restores immunoglobulins. Best for heavy first work. Preferably not combined with SOT.`,
-    protocol: `About 4 exchanges over 2 weeks, with IVIG after the last one.`,
+    protocol: `A series of 2 to 8 exchanges, often about 4 over 2 weeks, with IVIG after the last one. A full session uses about 9 to 12 bottles of albumin.`,
     cautions: `Needs good venous access. Citrate can lower calcium. Exchange also removes medicines and supplements, so dose them after a session. IVIG can cause headache and, rarely, clots.`,
-    people: ['johnson'], flags: ['toxins'] },
+    people: ['savage', 'johnson'], flags: ['toxins'] },
   { id: 'inus', name: 'INUSpheresis', cat: 'toxins', setting: 'clinic', freq: 'total', n: 3, weeks: 52, stage: 'maintain',
     tags: ['Microplastics', 'Mycotoxins', 'Environmental toxins', 'Inflammation', 'Maintenance detox'],
     sum: 'Filter apheresis for ongoing management, about 3 times a year, with an eluate test.',
@@ -739,7 +743,7 @@ const T = [
     protocol: `Daily for about 8 weeks.`,
     cautions: `Can trigger bronchospasm in people with asthma. Test a small dose first.`,
     combine: 'Home stack: vibration plate, light helmet or LIPUS, nebulizer and infrared panel, about 20 minutes in total.',
-    contra: ['asthma'], flags: ['sinus'] },
+    people: ['pall'], contra: ['asthma'], flags: ['sinus'] },
   { id: 'remediation', name: 'Home mold remediation', cat: 'toxins', setting: 'home', freq: 'cont', weeks: 8, stage: 'push',
     tags: ['Mold / CIRS', 'Environment'],
     sum: 'Remediate until ERMI or HERTSMI-2 is low enough, then retest.',
@@ -843,7 +847,8 @@ const T = [
     tags: ['Antioxidant', 'Immune', 'Collagen'],
     sum: 'Good-quality liposomal vitamin C, daily.',
     body: `Liposomal delivery gives higher absorption than standard oral vitamin C. A basic for immune and antioxidant support.`,
-    protocol: `Daily, ongoing.` },
+    protocol: `Daily, ongoing.`,
+    people: ['pall'] },
   { id: 'minerals', name: 'Catalyzed mineral complex (Quicksilver)', cat: 'nutrition', setting: 'home', freq: 'daily', weeks: 52, stage: 'both',
     tags: ['Minerals', 'Electrolytes'],
     sum: `Dr. Shade's Catalyzed Mineral Complex. Pause it during Sipper blocks.`,
@@ -1071,7 +1076,7 @@ const T = [
     body: `Bee venom contains melittin and apamin, which have anti-inflammatory and antimicrobial effects. Melittin acts against Borrelia in lab studies. In summer, wild honeybees can be taken from flowering rosemary bushes.`,
     protocol: `About 3 times a week in summer, building up the number of stings.`,
     cautions: `Risk of anaphylaxis. Test sting first, keep an epinephrine pen at hand, never do it alone.`,
-    flags: ['lyme'], contra: ['bee', 'pregnancy'] },
+    people: ['hinkens'], flags: ['lyme'], contra: ['bee', 'pregnancy'] },
   { id: 'osteo-neural', name: 'Osteopathy + neural therapy', cat: 'regen', setting: 'clinic', freq: 'ev2', weeks: 12, stage: 'both',
     tags: ['Scar tissue', 'Trauma', 'Fascia', 'Tissue fluids', 'Nervous system', 'Immune'],
     sum: 'Hands-on osteopathy and procaine injections that bring stuck tissue, scars and old trauma back to life.',
@@ -1608,7 +1613,7 @@ function makePlan({ person = 'Me', start = nextMonday(), year = 1, template = 'f
   return p;
 }
 function seed() {
-  S = { v: 10, current: null, plans: [], people: PEOPLE.map(x => ({ notes: '', ...clone(x) })), edits: {}, custom: [] };
+  S = { v: 11, current: null, plans: [], people: PEOPLE.map(x => ({ notes: '', ...clone(x) })), edits: {}, custom: [] };
   rebuildLib();
   const p = makePlan();
   S.plans.push(p); S.current = p.id;
@@ -1678,6 +1683,10 @@ function normalize(st) {
     // SinusKey and the MARCoNS swab are now two tests. The swab starts with the old combined state.
     for (const p of st.plans) if (!p.dx['dx-marcons']) p.dx['dx-marcons'] = p.dx['dx-sinus'] ? clone(p.dx['dx-sinus']) : { on: true, status: 'todo', date: '', notes: '' };
     st.v = 10;
+  }
+  if ((+st.v || 1) < 11) {
+    for (const id of ['savage', 'pall', 'teitelbaum', 'hinkens']) if (!st.people.some(x => x.id === id)) st.people.push({ notes: '', ...clone(PEOPLE.find(x => x.id === id)) });
+    st.v = 11;
   }
   if (!st.plans.some(p => p.id === st.current)) st.current = st.plans[0].id;
   return st;
